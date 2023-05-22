@@ -105,6 +105,7 @@ FROM grades
 WHERE student_id = 1;
   ```
   ![image](./images/7.png)
+  
   7. Вывести имена родителей студента с идентификатором 1 из таблицы parents:
    ```
   SELECT p.name
@@ -113,6 +114,7 @@ JOIN studentparents sp ON p.parent_id = sp.parent_id
 WHERE sp.student_id = 1;
   ```
   ![image](./images/8.png)
+  
   8. Вывести статус посещаемости для студента с идентификатором 2 из таблицы attendance:
    ```
   SELECT status
