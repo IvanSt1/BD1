@@ -82,7 +82,7 @@ JOIN groups g ON sc.group_id = g.group_id
 JOIN subjects s ON sc.subject_id = s.subject_id
 JOIN teachers t ON sc.teacher_id = t.teacher_id;
   ```
-  ![image](./images/3.png)
+  ![image](./images)
   
   3. Вывести имена студентов, их средний балл и статус посещаемости на последнем занятии:
    ```
