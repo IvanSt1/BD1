@@ -72,7 +72,7 @@ JOIN groups g ON s.group_id = g.group_id
 JOIN grades gr ON s.student_id = gr.student_id
 GROUP BY s.student_id;
   ```
-  ![image](./images)
+  ![image](./images/2.png)
   
   2. Вывести расписание занятий для каждой группы, включая информацию о предмете и имени преподавателя:
    ```
