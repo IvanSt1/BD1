@@ -90,7 +90,7 @@ INSERT INTO attendance (student_id, date, status) VALUES
   ```
   ![image](./images/5.png)
   
-  5. Вывести расписание занятий для группы с идентификатором 1 из таблицы schedule::
+  5. Вывести расписание занятий для группы с идентификатором 1 из таблицы schedule:
    ```
   SELECT *
   FROM schedule
@@ -98,14 +98,14 @@ INSERT INTO attendance (student_id, date, status) VALUES
   ```
   ![image](./images/6.png)
   
-  6. Вывести оценки студента с идентификатором 1 из таблицы grades::
+  6. Вывести оценки студента с идентификатором 1 из таблицы grades:
    ```
   SELECT *
 FROM grades
 WHERE student_id = 1;
   ```
   ![image](./images/7.png)
-  7. Вывести имена родителей студента с идентификатором 1 из таблицы parents::
+  7. Вывести имена родителей студента с идентификатором 1 из таблицы parents:
    ```
   SELECT p.name
 FROM parents p
