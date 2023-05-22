@@ -64,7 +64,62 @@ INSERT INTO attendance (student_id, date, status) VALUES
 
   ```
 ### Простые запросы на выборку
-  1. Получить все предметы со всеми полями из таблицы school ![image](./images/3.png)
+  1. Вывести все записи из таблицы teachers:
+   ```
+  SELECT * FROM teachers;
+  ```
+  ![image](./images/2.png)
+  
+  2. Вывести названия всех предметов из таблицы subjects:
+   ```
+  SELECT name FROM subjects;
+  ```
+  ![image](./images/3.png)
+  
+  3. Вывести имена всех групп из таблицы groups:
+   ```
+  SELECT name FROM groups;
+  ```
+  ![image](./images/4.png)
+  
+  4. Вывести имена студентов и их принадлежность к группе из таблицы students:
+   ```
+  SELECT s.name, g.name AS group_name
+  FROM students s
+  JOIN groups g ON s.group_id = g.group_id;
+  ```
+  ![image](./images/5.png)
+  
+  5. Вывести расписание занятий для группы с идентификатором 1 из таблицы schedule::
+   ```
+  SELECT *
+  FROM schedule
+  WHERE group_id = 1;
+  ```
+  ![image](./images/6.png)
+  
+  6. Вывести оценки студента с идентификатором 1 из таблицы grades::
+   ```
+  SELECT *
+FROM grades
+WHERE student_id = 1;
+  ```
+  ![image](./images/7.png)
+  7. Вывести имена родителей студента с идентификатором 1 из таблицы parents::
+   ```
+  SELECT p.name
+FROM parents p
+JOIN studentparents sp ON p.parent_id = sp.parent_id
+WHERE sp.student_id = 1;
+  ```
+  ![image](./images/8.png)
+  8. Вывести статус посещаемости для студента с идентификатором 2 из таблицы attendance:
+   ```
+  SELECT status
+FROM attendance
+WHERE student_id = 2;
+  ```
+  ![image](./images/9.png)
 
 ## Заключение
 База данных была заполнена тестовыми данными. На этих данных были выполнены простые запросы на выборку, которые могут понадобиться при работе данного магазина.
