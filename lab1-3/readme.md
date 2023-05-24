@@ -151,6 +151,35 @@ HAVING AVG(g.grade) > (
 )
   ```
   ![image](./images/9.png)
+  9.  Вывести сколько в среднем детей в одной семье:
+   ```
+  SELECT AVG(child_count) AS average_children_per_family
+FROM (
+  SELECT parent_id, COUNT(student_id) AS child_count
+  FROM studentparents
+  GROUP BY parent_id
+) AS subquery;
+
+  ```
+  ![image](./images/10.png)
+  
+  10.  Вывести зависимость среднего балла ребёнка от числа братьев и
+сестёр. Средняя оценка ребёнка, у которого 0 братьев, у которого 1 брат,
+и т.д.
+:
+   ```
+  SELECT sibling_count, AVG(grade) AS average_grade
+FROM (
+  SELECT s.student_id, COUNT(sp.student_id) AS sibling_count, g.grade
+  FROM students s
+  JOIN grades g ON s.student_id = g.student_id
+  JOIN studentparents sp ON s.student_id = sp.student_id
+  GROUP BY s.student_id
+) AS subquery
+GROUP BY sibling_count;
+
+  ```
+  ![image](./images/11.png)
 
 ## Заключение
 База данных была заполнена тестовыми данными. На этих данных были выполнены простые запросы на выборку, которые могут понадобиться при работе данного магазина.
