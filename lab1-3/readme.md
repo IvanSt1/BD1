@@ -151,6 +151,7 @@ HAVING AVG(g.grade) > (
 )
   ```
   ![image](./images/9.png)
+  
   9.  Вывести сколько в среднем детей в одной семье:
    ```
   SELECT AVG(child_count) AS average_children_per_family
