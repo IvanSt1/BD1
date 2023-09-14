@@ -7,7 +7,7 @@
   
   Созданы тестовые записи в таблице. 
   ```
-  -- Добавляем дисциплины
+-- Добавляем дисциплины
 INSERT INTO Disciplines (Name, Description) VALUES ('Football', 'A team sport played with a spherical ball.');
 INSERT INTO Disciplines (Name, Description) VALUES ('Basketball', 'A team sport played with a round ball and a hoop.');
 
@@ -42,7 +42,6 @@ INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VAL
 INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VALUES (2, 'Assisted a goal', '2023-09-15', 1);
 INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VALUES (3, 'Scored a basket', '2023-09-16', 2);
 INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VALUES (4, 'Blocked a shot', '2023-09-16', 1);
-
 
   ```
 ### Сложные запросы на выборку
