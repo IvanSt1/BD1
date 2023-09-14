@@ -1,4 +1,4 @@
-# НИЯУ МИФИ. ИИКС. Лабораторная работа №1-2. «Сложные запросы на выборку. Соединения». Фамилия Имя, Б20-505. 2023.
+# НИЯУ МИФИ. ИИКС. Лабораторная работа №1-4. «PostgreSQL». Фамилия Имя, Б20-505. 2023.
 
 ### Создание и заполнение таблиц
    Был выполнен [SQL сценарий для создания таблиц в SQLite](./organization.sql). 
@@ -51,6 +51,8 @@ INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VAL
 SELECT Name, Age FROM Participants WHERE TeamID = (SELECT TeamID FROM Teams WHERE Name = 'Team A');
 ```
 
+![image](./images/Screenshot_20.png)
+
 2. **Выбрать все команды, участвующие в "Football Championship":**
 ```sql
 SELECT T.Name FROM Teams T
@@ -58,6 +60,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 JOIN Competitions C ON TR.CompetitionID = C.CompetitionID
 WHERE C.Name = 'Football Championship';
 ```
+
+![image](./images/Screenshot_21.png)
+
 
 3. **Выбрать все дисциплины, в которых участвует "John Doe":**
 ```sql
@@ -67,10 +72,16 @@ JOIN Participants P ON T.TeamID = P.TeamID
 WHERE P.Name = 'John Doe';
 ```
 
+![image](./images/Screenshot_22.png)
+
+
 4. **Выбрать соревнования, проведенные после 1 сентября 2023 года:**
 ```sql
 SELECT Name, Date FROM Competitions WHERE Date > '2023-09-01';
 ```
+
+![image](./images/Screenshot_23.png)
+
 
 5. **Выбрать команды без описания дисциплины:**
 ```sql
@@ -79,10 +90,16 @@ JOIN Disciplines D ON T.DisciplineID = D.DisciplineID
 WHERE D.Description IS NULL;
 ```
 
+![image](./images/Screenshot_24.png)
+
+
 6. **Выбрать участников младше 21 года:**
 ```sql
 SELECT Name, Age FROM Participants WHERE Age < 21;
 ```
+
+![image](./images/Screenshot_25.png)
+
 
 7. **Выбрать средний возраст участников каждой команды:**
 ```sql
@@ -91,12 +108,18 @@ JOIN Teams T ON P.TeamID = T.TeamID
 GROUP BY T.Name;
 ```
 
+![image](./images/Screenshot_26.png)
+
+
 8. **Выбрать команды, которые забили более 50 очков в соревнованиях:**
 ```sql
 SELECT T.Name FROM Teams T
 JOIN TeamResults TR ON T.TeamID = TR.TeamID
 WHERE TR.Score > 50;
 ```
+
+![image](./images/Screenshot_27.png)
+
 
 9. **Выбрать дисциплины, в которых нет соревнований:**
 ```sql
@@ -105,12 +128,18 @@ LEFT JOIN Competitions C ON D.DisciplineID = C.DisciplineID
 WHERE C.CompetitionID IS NULL;
 ```
 
+![image](./images/Screenshot_28.png)
+
+
 10. **Выбрать участников, которые не имеют индивидуальных достижений:**
 ```sql
 SELECT P.Name FROM Participants P
 LEFT JOIN IndividualAchievements IA ON P.ParticipantID = IA.ParticipantID
 WHERE IA.AchievementID IS NULL;
 ```
+
+![image](./images/Screenshot_29.png)
+
 
 ### Сложные запросы:
 
@@ -122,6 +151,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 GROUP BY T.Name
 HAVING AVG(TR.Score) > (SELECT AVG(Score) FROM TeamResults);
 ```
+
+![image](./images/Screenshot_30.png)
+
 
 2. **Выбрать участников, которые участвовали в том же соревновании, что и "John Doe":**
 ```sql
@@ -135,12 +167,18 @@ JOIN Participants P2 ON T2.TeamID = P2.TeamID
 WHERE P1.Name = 'John Doe' AND P2.Name <> 'John Doe';
 ```
 
+![image](./images/Screenshot_31.png)
+
+
 3. **Выбрать дисциплины, в которых команда "Team A" не участвует:**
 ```sql
 SELECT D.Name
 FROM Disciplines D
 WHERE D.DisciplineID NOT IN (SELECT DisciplineID FROM Teams WHERE Name = 'Team A');
 ```
+
+![image](./images/Screenshot_32.png)
+
 
 4. **Выбрать участников, которые не имеют индивидуальных достижений, но их команды забили более 50 очков:**
 ```sql
@@ -151,6 +189,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 WHERE TR.Score > 50 AND P.ParticipantID NOT IN (SELECT ParticipantID FROM IndividualAchievements);
 ```
 
+![image](./images/Screenshot_33.png)
+
+
 5. **Выбрать дисциплины, в которых средний балл команд выше 40:**
 ```sql
 SELECT D.Name, AVG(TR.Score) AS AverageScore
@@ -160,6 +201,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 GROUP BY D.Name
 HAVING AVG(TR.Score) > 40;
 ```
+
+![image](./images/Screenshot_34.png)
+
 
 6. **Выбрать команды, которые участвовали во всех соревнованиях своей дисциплины:**
 ```sql
@@ -176,6 +220,9 @@ WHERE NOT EXISTS (
 );
 ```
 
+![image](./images/Screenshot_35.png)
+
+
 
 ## Заключение
-База данных была заполнена тестовыми данными. На этих данных были выполнены сложные запросы на выборку, которые могут понадобиться при работе данной организации.
+База данных была перенесена на PostgreSQL, заполнена тестовыми данными. На этих данных были выполнены простые и сложные запросы на выборку, которые могут понадобиться при работе данной организации.
