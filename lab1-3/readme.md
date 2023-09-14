@@ -56,6 +56,8 @@ GROUP BY T.Name
 HAVING AVG(TR.Score) > (SELECT AVG(Score) FROM TeamResults);
 ```
 
+![image](./images/Screenshot_12.png)
+
 2. **Выбрать дисциплины, в которых участвует "John Doe":**
 ```sql
 SELECT DISTINCT D.Name
@@ -64,6 +66,9 @@ JOIN Teams T ON D.DisciplineID = T.DisciplineID
 JOIN Participants P ON T.TeamID = P.TeamID
 WHERE P.Name = 'John Doe';
 ```
+
+![image](./images/Screenshot_13.png)
+
 
 3. **Выбрать участников, которые участвовали в том же соревновании, что и "John Doe":**
 ```sql
@@ -77,12 +82,18 @@ JOIN Participants P2 ON T2.TeamID = P2.TeamID
 WHERE P1.Name = 'John Doe' AND P2.Name <> 'John Doe';
 ```
 
+![image](./images/Screenshot_14.png)
+
+
 4. **Выбрать дисциплины, в которых команда "Team A" не участвует:**
 ```sql
 SELECT D.Name
 FROM Disciplines D
 WHERE D.DisciplineID NOT IN (SELECT DisciplineID FROM Teams WHERE Name = 'Team A');
 ```
+
+![image](./images/Screenshot_15.png)
+
 
 5. **Выбрать участников, которые не имеют индивидуальных достижений, но их команды забили более 50 очков:**
 ```sql
@@ -93,6 +104,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 WHERE TR.Score > 50 AND P.ParticipantID NOT IN (SELECT ParticipantID FROM IndividualAchievements);
 ```
 
+![image](./images/Screenshot_16.png)
+
+
 6. **Выбрать дисциплины, в которых средний балл команд выше 40:**
 ```sql
 SELECT D.Name, AVG(TR.Score) AS AverageScore
@@ -102,6 +116,9 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 GROUP BY D.Name
 HAVING AVG(TR.Score) > 40;
 ```
+
+![image](./images/Screenshot_17.png)
+
 
 7. **Выбрать команды, которые участвовали во всех соревнованиях своей дисциплины:**
 ```sql
@@ -117,6 +134,9 @@ WHERE NOT EXISTS (
     )
 );
 ```
+
+![image](./images/Screenshot_18.png)
+
 
 ## Заключение
 База данных была заполнена тестовыми данными. На этих данных были выполнены сложные запросы на выборку, которые могут понадобиться при работе данной организации.
