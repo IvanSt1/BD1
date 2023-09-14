@@ -47,64 +47,99 @@ INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VAL
 
   ```
 ### Простые запросы на выборку
-  1. Вывести все записи из таблицы teachers:
-   ```
-  SELECT * FROM teachers;
-  ```
-  ![image](./images/2.png)
-  
-  2. Вывести названия всех предметов из таблицы subjects:
-   ```
-  SELECT name FROM subjects;
-  ```
-  ![image](./images/3.png)
-  
-  3. Вывести имена всех групп из таблицы groups:
-   ```
-  SELECT name FROM groups;
-  ```
-  ![image](./images/4.png)
-  
-  4. Вывести имена студентов и их принадлежность к группе из таблицы students:
-   ```
-  SELECT s.name, g.name AS group_name
-  FROM students s
-  JOIN groups g ON s.group_id = g.group_id;
-  ```
-  ![image](./images/5.png)
-  
-  5. Вывести расписание занятий для группы с идентификатором 1 из таблицы schedule:
-   ```
-  SELECT *
-  FROM schedule
-  WHERE group_id = 1;
-  ```
-  ![image](./images/6.png)
-  
-  6. Вывести оценки студента с идентификатором 1 из таблицы grades:
-   ```
-  SELECT *
-FROM grades
-WHERE student_id = 1;
-  ```
-  ![image](./images/7.png)
-  
-  7. Вывести имена родителей студента с идентификатором 1 из таблицы parents:
-   ```
-  SELECT p.name
-FROM parents p
-JOIN studentparents sp ON p.parent_id = sp.parent_id
-WHERE sp.student_id = 1;
-  ```
-  ![image](./images/8.png)
-  
-  8. Вывести статус посещаемости для студента с идентификатором 2 из таблицы attendance:
-   ```
-  SELECT status
-FROM attendance
-WHERE student_id = 2;
-  ```
-  ![image](./images/9.png)
+
+1. **Выбрать всех участников из команды "Team A":**
+```sql
+SELECT Name, Age FROM Participants WHERE TeamID = (SELECT TeamID FROM Teams WHERE Name = 'Team A');
+```
+
+![image](./images/Screenshot_2.png)
+
+2. **Выбрать все команды, участвующие в "Football Championship":**
+```sql
+SELECT T.Name FROM Teams T
+JOIN TeamResults TR ON T.TeamID = TR.TeamID
+JOIN Competitions C ON TR.CompetitionID = C.CompetitionID
+WHERE C.Name = 'Football Championship';
+```
+
+![image](./images/Screenshot_3.png)
+
+3. **Выбрать все дисциплины, в которых участвует "John Doe":**
+```sql
+SELECT D.Name FROM Disciplines D
+JOIN Teams T ON D.DisciplineID = T.DisciplineID
+JOIN Participants P ON T.TeamID = P.TeamID
+WHERE P.Name = 'John Doe';
+```
+
+![image](./images/Screenshot_4.png)
+
+
+4. **Выбрать соревнования, проведенные после 1 сентября 2023 года:**
+```sql
+SELECT Name, Date FROM Competitions WHERE Date > '2023-09-01';
+```
+
+![image](./images/Screenshot_5.png)
+
+
+5. **Выбрать команды без описания дисциплины:**
+```sql
+SELECT T.Name FROM Teams T
+JOIN Disciplines D ON T.DisciplineID = D.DisciplineID
+WHERE D.Description IS NULL;
+```
+
+![image](./images/Screenshot_6.png)
+
+
+6. **Выбрать участников младше 21 года:**
+```sql
+SELECT Name, Age FROM Participants WHERE Age < 21;
+```
+
+![image](./images/Screenshot_7.png)
+
+
+7. **Выбрать средний возраст участников каждой команды:**
+```sql
+SELECT T.Name, AVG(P.Age) AS AverageAge FROM Participants P
+JOIN Teams T ON P.TeamID = T.TeamID
+GROUP BY T.Name;
+```
+
+![image](./images/Screenshot_8.png)
+
+
+8. **Выбрать команды, которые забили более 50 очков в соревнованиях:**
+```sql
+SELECT T.Name FROM Teams T
+JOIN TeamResults TR ON T.TeamID = TR.TeamID
+WHERE TR.Score > 50;
+```
+
+![image](./images/Screenshot_9.png)
+
+
+9. **Выбрать дисциплины, в которых нет соревнований:**
+```sql
+SELECT D.Name FROM Disciplines D
+LEFT JOIN Competitions C ON D.DisciplineID = C.DisciplineID
+WHERE C.CompetitionID IS NULL;
+```
+
+![image](./images/Screenshot_10.png)
+
+
+10. **Выбрать участников, которые не имеют индивидуальных достижений:**
+```sql
+SELECT P.Name FROM Participants P
+LEFT JOIN IndividualAchievements IA ON P.ParticipantID = IA.ParticipantID
+WHERE IA.AchievementID IS NULL;
+```
+
+![image](./images/Screenshot_11.png)
 
 ## Заключение
-База данных была заполнена тестовыми данными. На этих данных были выполнены простые запросы на выборку, которые могут понадобиться при работе данного магазина.
+База данных была заполнена тестовыми данными. На этих данных были выполнены простые запросы на выборку, которые могут понадобиться при работе данной организации.
