@@ -5,7 +5,7 @@
 
    Результат: создания таблицы ![image](./images/Screenshot_1.png)
   
-  Созданы тестовые записи в таблице school. 
+  Созданы тестовые записи в таблице. 
   ```
 -- Добавляем дисциплины
 INSERT INTO Disciplines (Name, Description) VALUES ('Football', 'A team sport played with a spherical ball.');
