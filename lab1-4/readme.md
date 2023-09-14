@@ -44,7 +44,75 @@ INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VAL
 INSERT INTO IndividualAchievements (ParticipantID, Description, Date, Score) VALUES (4, 'Blocked a shot', '2023-09-16', 1);
 
   ```
-### Сложные запросы на выборку
+### Простые запросы:
+
+1. **Выбрать всех участников из команды "Team A":**
+```sql
+SELECT Name, Age FROM Participants WHERE TeamID = (SELECT TeamID FROM Teams WHERE Name = 'Team A');
+```
+
+2. **Выбрать все команды, участвующие в "Football Championship":**
+```sql
+SELECT T.Name FROM Teams T
+JOIN TeamResults TR ON T.TeamID = TR.TeamID
+JOIN Competitions C ON TR.CompetitionID = C.CompetitionID
+WHERE C.Name = 'Football Championship';
+```
+
+3. **Выбрать все дисциплины, в которых участвует "John Doe":**
+```sql
+SELECT D.Name FROM Disciplines D
+JOIN Teams T ON D.DisciplineID = T.DisciplineID
+JOIN Participants P ON T.TeamID = P.TeamID
+WHERE P.Name = 'John Doe';
+```
+
+4. **Выбрать соревнования, проведенные после 1 сентября 2023 года:**
+```sql
+SELECT Name, Date FROM Competitions WHERE Date > '2023-09-01';
+```
+
+5. **Выбрать команды без описания дисциплины:**
+```sql
+SELECT T.Name FROM Teams T
+JOIN Disciplines D ON T.DisciplineID = D.DisciplineID
+WHERE D.Description IS NULL;
+```
+
+6. **Выбрать участников младше 21 года:**
+```sql
+SELECT Name, Age FROM Participants WHERE Age < 21;
+```
+
+7. **Выбрать средний возраст участников каждой команды:**
+```sql
+SELECT T.Name, AVG(P.Age) AS AverageAge FROM Participants P
+JOIN Teams T ON P.TeamID = T.TeamID
+GROUP BY T.Name;
+```
+
+8. **Выбрать команды, которые забили более 50 очков в соревнованиях:**
+```sql
+SELECT T.Name FROM Teams T
+JOIN TeamResults TR ON T.TeamID = TR.TeamID
+WHERE TR.Score > 50;
+```
+
+9. **Выбрать дисциплины, в которых нет соревнований:**
+```sql
+SELECT D.Name FROM Disciplines D
+LEFT JOIN Competitions C ON D.DisciplineID = C.DisciplineID
+WHERE C.CompetitionID IS NULL;
+```
+
+10. **Выбрать участников, которые не имеют индивидуальных достижений:**
+```sql
+SELECT P.Name FROM Participants P
+LEFT JOIN IndividualAchievements IA ON P.ParticipantID = IA.ParticipantID
+WHERE IA.AchievementID IS NULL;
+```
+
+### Сложные запросы:
 
 1. **Выбрать команды, у которых средний балл выше среднего балла всех команд в соревнованиях:**
 ```sql
@@ -55,21 +123,7 @@ GROUP BY T.Name
 HAVING AVG(TR.Score) > (SELECT AVG(Score) FROM TeamResults);
 ```
 
-![image](./images/Screenshot_12.png)
-
-2. **Выбрать дисциплины, в которых участвует "John Doe":**
-```sql
-SELECT DISTINCT D.Name
-FROM Disciplines D
-JOIN Teams T ON D.DisciplineID = T.DisciplineID
-JOIN Participants P ON T.TeamID = P.TeamID
-WHERE P.Name = 'John Doe';
-```
-
-![image](./images/Screenshot_13.png)
-
-
-3. **Выбрать участников, которые участвовали в том же соревновании, что и "John Doe":**
+2. **Выбрать участников, которые участвовали в том же соревновании, что и "John Doe":**
 ```sql
 SELECT DISTINCT P2.Name
 FROM Participants P1
@@ -81,20 +135,14 @@ JOIN Participants P2 ON T2.TeamID = P2.TeamID
 WHERE P1.Name = 'John Doe' AND P2.Name <> 'John Doe';
 ```
 
-![image](./images/Screenshot_14.png)
-
-
-4. **Выбрать дисциплины, в которых команда "Team A" не участвует:**
+3. **Выбрать дисциплины, в которых команда "Team A" не участвует:**
 ```sql
 SELECT D.Name
 FROM Disciplines D
 WHERE D.DisciplineID NOT IN (SELECT DisciplineID FROM Teams WHERE Name = 'Team A');
 ```
 
-![image](./images/Screenshot_15.png)
-
-
-5. **Выбрать участников, которые не имеют индивидуальных достижений, но их команды забили более 50 очков:**
+4. **Выбрать участников, которые не имеют индивидуальных достижений, но их команды забили более 50 очков:**
 ```sql
 SELECT P.Name
 FROM Participants P
@@ -103,10 +151,7 @@ JOIN TeamResults TR ON T.TeamID = TR.TeamID
 WHERE TR.Score > 50 AND P.ParticipantID NOT IN (SELECT ParticipantID FROM IndividualAchievements);
 ```
 
-![image](./images/Screenshot_16.png)
-
-
-6. **Выбрать дисциплины, в которых средний балл команд выше 40:**
+5. **Выбрать дисциплины, в которых средний балл команд выше 40:**
 ```sql
 SELECT D.Name, AVG(TR.Score) AS AverageScore
 FROM Disciplines D
@@ -116,10 +161,7 @@ GROUP BY D.Name
 HAVING AVG(TR.Score) > 40;
 ```
 
-![image](./images/Screenshot_17.png)
-
-
-7. **Выбрать команды, которые участвовали во всех соревнованиях своей дисциплины:**
+6. **Выбрать команды, которые участвовали во всех соревнованиях своей дисциплины:**
 ```sql
 SELECT T.Name
 FROM Teams T
@@ -133,8 +175,6 @@ WHERE NOT EXISTS (
     )
 );
 ```
-
-![image](./images/Screenshot_18.png)
 
 
 ## Заключение
